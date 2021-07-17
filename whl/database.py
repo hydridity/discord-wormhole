@@ -28,6 +28,15 @@ class Beam(database.base):
             f"**{len(self.admins)}** admins and **{len(self.banned)}** banned users."
         )
 
+    def dump(self) -> dict:
+        return {
+            "name": self.name,
+            "active": self.active,
+            "channels": [c.dump() for c in self.channels],
+            "admins": [a.user_id for a in self.admins],
+            "banned": [b.user_id for b in self.banned],
+        }
+
     @staticmethod
     def add(*, name: str, active: bool) -> Beam:
         beam = Beam(name=name, active=active)
@@ -70,7 +79,7 @@ class Beam(database.base):
 
 
 class Channel(database.base):
-    __tablename__ = "wormhole_channel"
+    __tablename__ = "wormhole_channels"
 
     channel_id = Column(BigInteger, primary_key=True)
     active = Column(Boolean)
@@ -78,22 +87,33 @@ class Channel(database.base):
     beam = relationship("Beam", back_populates="channels")
     users = relationship("User")
     admins = relationship("ChannelAdmin")
+    messages = Column(Integer, default=0)
 
     def __repr__(self) -> str:
         return (
-            f'<Channel channel_id="{self.chanel_id}" '
-            f'active="{self.active}" beam_name="{self.beam_name}">'
+            f'<Channel channel_id="{self.chanel_id}" active="{self.active}" '
+            f'beam_name="{self.beam_name}" messages="{self.messages}">'
         )
 
     def __discord_str__(self) -> str:
         return (
             f"Channel in beam **{self.beam_name}** with "
-            f"**{len(self.users)}** users and **{len(self.admins)}** admins."
+            f"**{len(self.users)}** users and **{len(self.admins)}** admins. "
+            f"**{self.messages}** messages."
         )
 
+    def dump(self) -> dict:
+        return {
+            "channel_id": self.channel_id,
+            "active": self.active,
+            "beam_name": self.beam_name,
+            "admins": [a.user_id for a in self.admins],
+            "messages": self.messages,
+        }
+
     @staticmethod
-    def add(*, beam_name: str, channel_id: int, active: bool) -> Channel:
-        beam = Beam.get(name=beam_name)
+    def add(*, beam: str, channel_id: int, active: bool) -> Channel:
+        beam = Beam.get(name=beam)
         if beam is None:
             raise ValueError("No such beam.")
 
@@ -116,13 +136,28 @@ class Channel(database.base):
         session.commit()
         return num > 0
 
+    def add_admin(self, user_id: int) -> Beam:
+        admin = ChannelAdmin(channel_id=self.channel_id, user_id=user_id)
+        if admin not in self.admins:
+            self.admins.append(admin)
+        self.save()
+        return self
+
+    def delete_admin(self, user_id: int) -> bool:
+        num = (
+            session.query(ChannelAdmin)
+            .filter_by(channel_id=self.channel_id, user_id=user_id)
+            .delete()
+        )
+        return num > 0
+
 
 class User(database.base):
     __tablename__ = "wormhole_users"
 
     idx = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(BigInteger)
-    channel_id = Column(BigInteger, ForeignKey("wormhole_channel.channel_id"))
+    channel_id = Column(BigInteger, ForeignKey("wormhole_channels.channel_id"))
     channel = relationship("Channel", back_populates="users")
     name = Column(String)
 
@@ -134,6 +169,13 @@ class User(database.base):
 
     def __discord_str__(self) -> str:
         return f"User **{self.name}** in beam **{self.channel.beam.name}**."
+
+    def dump(self) -> dict:
+        return {
+            "user_id": self.user_id,
+            "channel_id": self.channel_id,
+            "name": self.name,
+        }
 
     @staticmethod
     def add(*, channel_id: int, user_id: int, name: str) -> User:
@@ -183,6 +225,12 @@ class BeamAdmin(database.base):
             and self.user_id == obj.user_id
         )
 
+    def dump(self) -> dict:
+        return {
+            "beam_name": self.beam_name,
+            "user_id": self.user_id,
+        }
+
 
 class BeamBanned(database.base):
     __tablename__ = "wormhole_beam_banned"
@@ -198,12 +246,18 @@ class BeamBanned(database.base):
             and self.user_id == obj.user_id
         )
 
+    def dump(self) -> dict:
+        return {
+            "beam_name": self.beam_name,
+            "user_id": self.user_id,
+        }
+
 
 class ChannelAdmin(database.base):
     __tablename__ = "wormhole_channel_admins"
 
     idx = Column(Integer, primary_key=True, autoincrement=True)
-    channel_id = Column(BigInteger, ForeignKey("wormhole_channel.channel_id"))
+    channel_id = Column(BigInteger, ForeignKey("wormhole_channels.channel_id"))
     user_id = Column(BigInteger)
 
     def __eq__(self, obj) -> bool:
@@ -212,3 +266,9 @@ class ChannelAdmin(database.base):
             and self.channel_id == obj.channel_id
             and self.user_id == obj.user_id
         )
+
+    def dump(self) -> dict:
+        return {
+            "channel_id": self.channel_id,
+            "user_id": self.user_id,
+        }
