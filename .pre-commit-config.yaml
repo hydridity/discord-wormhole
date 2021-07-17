@@ -18,5 +18,4 @@ repos:
   rev: '3.9.2'
   hooks:
   - id: flake8
-    args:
-      - --isolated
+    args: [--ignore=W503]
