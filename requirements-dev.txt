@@ -1,4 +1,0 @@
-black==21.5b0
-flake8==3.9.1
-flake8-print
-flake8-todo

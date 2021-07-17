@@ -4,6 +4,8 @@ Small fixes are not listed. See diffs for each version to see details.
 
 ## [unreleased]
 
+- Code completly rewritten with pumpkin.py as a base
+
 ## [0.2.5]
 
 - Bump discord.py version to 1.7.2
