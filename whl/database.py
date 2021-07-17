@@ -127,6 +127,11 @@ class Channel(database.base):
         channel = session.query(Channel).filter_by(channel_id=channel_id).one_or_none()
         return channel
 
+    @staticmethod
+    def get_all():
+        channels = session.query(Channel).all()
+        return channels
+
     def save(self) -> Channel:
         session.commit()
         return self
@@ -196,6 +201,18 @@ class User(database.base):
             .one_or_none()
         )
         return user
+
+    @staticmethod
+    def get_by_name(*, beam: str, name: str) -> Optional[User]:
+        beam = Beam.get(name=beam)
+        if beam is None:
+            raise ValueError("No such beam.")
+
+        for channel in beam.channels:
+            for user in channel.users:
+                if user.name == name:
+                    return user
+        return None
 
     def save(self) -> User:
         session.commit()
