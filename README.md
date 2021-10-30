@@ -3,6 +3,10 @@ A Discord bot able to connect multiple guilds with one shared chat.
 
 *Update 2021-04-27: I don't have time for the development anymore. The bot still works, but no new features are being added.*
 
+---
+
+*Hydridity 2021-10-30: I have started exploring possible use case of this bot for my Nyara-Network community and it's partners, this fork is a testing ground for modifications allowing this bot to operate in docker/kubernetes environments, should this use case prove to be fulfilling our needs I will keep maintaining source code of this fork*
+
 <p align="center">
   <!-- Discord -->
   <a href="https://discord.com/invite/9N3cP2E">
