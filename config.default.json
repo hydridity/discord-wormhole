@@ -24,6 +24,6 @@
 	"database path": null,
 
 	"__comment": "Database port",
-	"database port": null
+	"database port": 6379
 
 }
