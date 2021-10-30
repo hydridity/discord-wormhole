@@ -44,10 +44,10 @@ if [ -n "${LOG_LEVEL+set}" ] ; then
         '."log level" = $LOG_LEVEL' config.json > config.json.tmp && \
         cat config.json.tmp > config.json
 fi
-if [ -n "${DATABASE_URI+set}" ] ; then
+if [ -n "${DATABASE_PATH+set}" ] ; then
     jq -r \
-        --arg DATABASE_URI "${DATABASE_URI}" \
-        '."database path" = $DATABASE_URI' config.json > config.json.tmp && \
+        --arg DATABASE_PATH "${DATABASE_PATH}" \
+        '."database path" = $DATABASE_PATH' config.json > config.json.tmp && \
         cat config.json.tmp > config.json
 fi
 if [ -n "${DATABASE_PORT+set}" ] ; then

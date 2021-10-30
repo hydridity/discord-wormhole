@@ -7,7 +7,7 @@ from core.errors import DatabaseException
 
 
 config = json.load(open("config.json"))
-db = redis.Redis(host=config["database uri"], port=config["database port"], db=0, decode_responses=True)
+db = redis.Redis(host=config["database path"], port=config["database port"], db=0, decode_responses=True)
 
 
 class BeamRepository:

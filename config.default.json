@@ -20,7 +20,7 @@
 	"__comment": "Output level. DEBUG | INFO | WARNING | ERROR | CRITICAL",
 	"log level": "ERROR",
 
-	"__comment": "Database URI",
+	"__comment": "Database path",
 	"database path": null,
 
 	"__comment": "Database port",
