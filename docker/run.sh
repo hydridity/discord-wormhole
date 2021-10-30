@@ -44,6 +44,18 @@ if [ -n "${LOG_LEVEL+set}" ] ; then
         '."log level" = $LOG_LEVEL' config.json > config.json.tmp && \
         cat config.json.tmp > config.json
 fi
+if [ -n "${DATABASE_URI+set}" ] ; then
+    jq -r \
+        --arg DATABASE_URI "${DATABASE_URI}" \
+        '."database path" = $DATABASE_URI' config.json > config.json.tmp && \
+        cat config.json.tmp > config.json
+fi
+if [ -n "${DATABASE_PORT+set}" ] ; then
+    jq -r \
+        --arg DATABASE_PORT "${DATABASE_PORT}" \
+        '."database port" = $DATABASE_PORT' config.json > config.json.tmp && \
+        cat config.json.tmp > config.json
+fi
 
 # start bot
 python init.py
