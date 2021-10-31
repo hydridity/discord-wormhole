@@ -1,10 +1,13 @@
 import redis
+import json
 from typing import Union, Optional, List, Dict
 
 from core import objects
 from core.errors import DatabaseException
 
-db = redis.Redis(host="localhost", port=6379, db=0, decode_responses=True)
+
+config = json.load(open("config.json"))
+db = redis.Redis(host=config["database path"], port=config["database port"], db=0, decode_responses=True)
 
 
 class BeamRepository:

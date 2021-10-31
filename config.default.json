@@ -18,5 +18,12 @@
 	"log channel": null,
 
 	"__comment": "Output level. DEBUG | INFO | WARNING | ERROR | CRITICAL",
-	"log level": "ERROR"
+	"log level": "ERROR",
+
+	"__comment": "Database path",
+	"database path": null,
+
+	"__comment": "Database port",
+	"database port": 6379
+
 }
