@@ -5,13 +5,13 @@ cp config.default.json config.json
 if [ -n "${ADMIN_ID+set}" ] ; then
     jq -r \
         --arg ADMIN_ID "${ADMIN_ID}" \
-        '."admin id" = ($ADMIN_ID | tonumber)' config.json > config.json.tmp && \
+        '."admin id" = $ADMIN_ID' config.json > config.json.tmp && \
         cat config.json.tmp > config.json
 fi
 if [ -n "${BOT_ID+set}" ] ; then
     jq -r \
         --arg BOT_ID "${BOT_ID}" \
-        '."bot id" = ($BOT_ID | tonumber)' config.json > config.json.tmp && \
+        '."bot id" = $BOT_ID' config.json > config.json.tmp && \
         cat config.json.tmp > config.json
 fi
 if [ -n "${BOT_KEY+set}" ] ; then
@@ -35,7 +35,7 @@ fi
 if [ -n "${LOG_CHANNEL+set}" ] ; then
     jq -r \
         --arg LOG_CHANNEL "${LOG_CHANNEL}" \
-        '."log channel" = ($LOG_CHANNEL | tonumber)' config.json > config.json.tmp && \
+        '."log channel" = $LOG_CHANNEL' config.json > config.json.tmp && \
         cat config.json.tmp > config.json
 fi
 if [ -n "${LOG_LEVEL+set}" ] ; then
