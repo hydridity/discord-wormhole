@@ -13,7 +13,7 @@ COPY core /usr/src/app/core
 
 COPY docker /usr/src/app/docker
 
-RUN chmod +x ./docker/run.sh
+RUN chmod +x ./docker/entry.sh
 
 ENV PYTHONUNBUFFERED=1
-CMD ["./docker/run.sh"]
+CMD ["./docker/entry.sh"]
