@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - 'master'
+      - 'docker-security-scan'
       
 jobs:
   docker:
@@ -25,4 +25,10 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/discord-wormhole:latest
+          tags: ghcr.io/${{ github.repository_owner }}/discord-wormhole:citest
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Scan docker container
+        uses: anchore/scan-action@v3.1.0
