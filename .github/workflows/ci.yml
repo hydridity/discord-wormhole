@@ -34,6 +34,7 @@ jobs:
           image: ghcr.io/${{ github.repository_owner }}/discord-wormhole:citest
           acs-report-enable: true
           fail-build: false
+          severity-cutoff: "high"
       -
         name: Inspect action SARIF report
         run: cat ${{ steps.scan.outputs.sarif }}
