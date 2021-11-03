@@ -11,12 +11,12 @@ Helm chart: https://github.com/hydridity/discord-wormhole-helm
 
 <p align="center">
   <!-- Discord -->
-  <a href="https://discord.com/invite/9N3cP2E">
-    <img src="https://img.shields.io/badge/Home%20guild-VUT%20FEKT-success?style=flat-square" alt="VUT FEKT" />
+  <a href="https://discord.gg/dG8PNtd">
+    <img src="https://img.shields.io/badge/Support%20Guild-The%20Venue-brightgreen?style=flat-square" alt="The Venue" />
   </a>
   <!-- Build status -->
-  <a href="https://github.com/sinus-x/discord-wormhole/actions?query=workflow%3AWormhole">
-    <img src="https://img.shields.io/github/workflow/status/sinus-x/discord-wormhole/Wormhole/redis?style=flat-square" alt="Build" />
+  <a href="https://github.com/hydridity/discord-wormhole/actions/workflows/build.yml?query=branch%3Amaster++">
+    <img src="https://img.shields.io/github/workflow/status/Hydridity/discord-wormhole/Wormhole/master?style=flat-square" alt="Build" />
   </a>
   <!-- Mantained? -->
   <a href="https://github.com/sinus-x/discord-wormhole/graphs/commit-activity">
