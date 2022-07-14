@@ -33,14 +33,14 @@ class Wormhole(wormcog.Wormcog):
         if message.author.bot:
             return
 
-        if "discord.gg" in message.content:
-            await message.channel.send("<<<⚠️ Master check failed <--> forbidding to send discord invite link via wormhole>>>")
-            return
-
         # get wormhole
         db_w = repo_w.get(message.channel.id)
 
         if db_w is None:
+            return
+
+        if "discord.gg" in message.content:
+            await message.channel.send("<<<⚠️ Master check failed <--> forbidding to send discord invite link via wormhole>>>")
             return
 
         # get additional information
